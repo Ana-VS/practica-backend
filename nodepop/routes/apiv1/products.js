@@ -16,6 +16,8 @@ router.get ('/', async (req, res, next) => {
         const skip = req.query.skip;
         const limit = req.query.limit;
 
+        const fields = req.query.fields;
+
         // filters
         const filter = {};
 
