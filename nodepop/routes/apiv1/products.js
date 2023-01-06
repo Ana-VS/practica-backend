@@ -12,6 +12,7 @@ router.get ('/', async (req, res, next) => {
         const tags = req.query.tags;
         const onSale = req.query.onSale;
         const name = req.query.name;
+        const price = req.query.price;
 
         const skip = req.query.skip;
         const limit = req.query.limit;
@@ -33,6 +34,25 @@ router.get ('/', async (req, res, next) => {
             filter.name = new RegExp('^' + name, 'i');
         }
 
+        if (price) {
+
+            const priceRange = price.split('-');
+            
+            if (priceRange.length === 1){
+                filter.price = price;
+            }else{
+                if (priceRange[0] !== '' & priceRange[1] === ''){
+                    filter.price={'$gte':priceRange[0]};
+                };
+                if (priceRange[1] !== '' & priceRange[0] === ''){
+                    filter.price={'$lte':priceRange[1]};
+                };
+                if (priceRange[1] !== '' & priceRange[0] !== ''){
+                    filter.price={'$gte':priceRange[0],'$lte':priceRange[1]};
+                };
+            }
+        };
+
         const products = await Product.array(filter, skip, limit);
         res.json({ results: products });
     } catch (err) {
@@ -53,5 +73,16 @@ router.post ('/', async (req, res, next) => {
         next (err);
     }
 });
+
+router.get('/tags', function(req, res){
+    Product.tagsArray (function(err, tags){
+        if (err){
+            return res.json({err});
+        }
+        res.json({tags});
+    });
+ 
+ });
+
 
 module.exports = router;

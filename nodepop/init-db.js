@@ -25,7 +25,7 @@ async function initProducts () {
 
     // create initial products
     const inserted = await Product.insertMany ([
-        {name: "Auriculares", onSale: true, price: 45, image: "auriculares.png", tags: ["mobile", "electronics"]},
+        {name: "Auriculares", onSale: true, price: 15, image: "auriculares.png", tags: ["mobile", "electronics"]},
         {name: "Ordenador portátil", onSale: true, price: 399.95, image: "laptop.png", tags: ["work", "electronics"]},
         {name: "Zapatillas running", onSale: false, price: 39, image: "zapatillas.png", tags: ["lifestyle", "outdoors"]},
         {name: "Móvil", onSale: false, price: 130, image: "movil.png", tags: ["mobile", "electronics"]},

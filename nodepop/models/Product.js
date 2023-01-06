@@ -18,6 +18,35 @@ productSchema.statics.array = function (filter, skip, limit) {
     return query.exec();
 }
 
+productSchema.statics.tagsArray = function(cb){
+
+    return new Promise(function (resolve, reject){
+
+
+    const query = Product.find().distinct('tags',function(err, results){
+
+        if(err){
+            if(cb){
+                cb(err);
+                return;
+            }
+            reject(err);
+        }
+        if(cb){
+            cb(null, results);
+            return;
+        }
+
+        resolve(results);
+
+    });
+
+    });
+
+};
+
+
+
 // create model
 const Product = mongoose.model ('Product', productSchema)
 
